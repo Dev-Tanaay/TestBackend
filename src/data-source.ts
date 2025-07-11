@@ -1,7 +1,8 @@
 import { DataSource } from 'typeorm';
 import { Product } from './entity/Product';
 import { ProductImage } from './entity/ProductImage';
-import "dotenv/config";
+import { config } from 'dotenv';
+config()
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,
