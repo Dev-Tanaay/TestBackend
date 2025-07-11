@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AppDataSource } from '../data-source';
 import { Product } from '../entity/Product';
 import { ProductImage } from '../entity/ProductImage';
-import { ProductModel } from '../../models/product.type';
+import { ProductModel } from '../models/product.type';
 
 const productRepo = AppDataSource.getRepository(Product);
 const imageRepo = AppDataSource.getRepository(ProductImage);
@@ -92,36 +92,3 @@ export const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const addImageToProduct = async (req: Request, res: Response) => {
-  try {
-    const productId = parseInt(req.params.productId);
-    const { imageUrl } = req.body;
-
-    const product = await productRepo.findOneBy({ id: productId });
-    if (!product) return res.status(404).json({ message: 'Product not found' });
-
-    const image = new ProductImage();
-    image.imageUrl = imageUrl;
-    image.product = product;
-
-    const saved = await imageRepo.save(image);
-    res.status(201).json(saved);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to add image', error: err });
-  }
-};
-
-export const deleteImageById = async (req: Request, res: Response) => {
-  try {
-    const imageId = parseInt(req.params.imageId);
-
-    const result = await imageRepo.delete(imageId);
-    if (result.affected === 0) {
-      return res.status(404).json({ message: 'Image not found' });
-    }
-
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to delete image', error: err });
-  }
-};

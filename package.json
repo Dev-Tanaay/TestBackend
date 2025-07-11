@@ -5,7 +5,7 @@
    "scripts": {
       "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
       "build": "tsc",
-      "start": "ts-node build/src/index.js",
+      "start": "npx nodemon dist/index.js",
       "typeorm": "typeorm-ts-node-commonjs"
    },
    "keywords": [],
@@ -17,6 +17,7 @@
       "cors": "^2.8.5",
       "dotenv": "^17.2.0",
       "express": "^5.1.0",
+      "nodemon": "^3.1.10",
       "pg": "^8.14.1",
       "reflect-metadata": "^0.2.2",
       "typeorm": "0.3.25"
